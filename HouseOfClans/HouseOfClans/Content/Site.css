@@ -1,0 +1,296 @@
+﻿html{
+    min-height: 100%;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    background: -webkit-linear-gradient(gray, #4a4a4a); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(gray, #4a4a4a); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(gray, #4a4a4a); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(gray, #4a4a4a); /* Standard syntax */
+    min-height: 100%;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: white;
+    border-radius: 0px 0px 10px 10px;
+    padding-bottom: 30px;
+}
+
+footer {
+    color: white;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.logo-small {
+    background:no-repeat url(../Content/Images/Logo.png) 0 0;
+    height:50px;
+    width:50px;
+    float:left;
+    border:none;
+    display:inline;
+}
+
+.clan-abbreviation {
+    font-weight:700;
+    padding-left: 0px;
+    font-size: 22px;
+}
+
+.clan-shield {
+    height:50px;
+    width:50px;
+    float:left;
+    border:none;
+    display:inline;
+}
+
+.clan-banner {
+    background-color: gray;
+}
+
+.clan-name {
+    font-weight: 600;
+}
+
+.main-navbar {
+    background: -webkit-linear-gradient(#000000, #505050); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#000000, #505050); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#000000, #505050); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#000000, #505050); /* Standard syntax */
+    border-bottom-color: #505050;
+}
+
+.clan-navbar {
+    background: -webkit-linear-gradient(#459e00, #96f226); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#459e00, #96f226); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#459e00, #96f226); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#459e00, #96f226); /* Standard syntax */
+    border-color: #459e00;
+    margin-bottom: 0px;
+}
+
+.tab-title {
+    font-weight: 500;
+    text-align: center;
+    font-size: 55px;
+    color: white;
+}
+
+.panel-main {
+    border: none;
+}
+
+.panel-main-title {
+    border-radius: 0px 0px 15px 15px;
+}
+
+.edit-mode {
+    color: white;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon {
+    padding-right: 12px;
+}
+
+.image-large {
+    height:auto; 
+    width:auto; 
+    max-width:300px; 
+    max-height:300px; 
+    float: left;
+    margin-right:25px;
+}
+
+.image-medium {
+    height:auto; 
+    width:auto; 
+    max-width:200px; 
+    max-height:200px; 
+    float: left;
+    margin-right:25px;
+}
+
+.image-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+}
+
+.glyph-btn {
+   padding: 10px 4px 0px 5px;
+}
+
+.btn-edit{
+    color: green;
+}
+
+.btn-promote {
+    color: green;
+}
+
+.btn-demote {
+    color: orange;
+}
+
+.btn-remove {
+    color: red;
+}
+
+.btn-hover-black:hover{
+    color: black;
+}
+
+.btn-blacklist{
+    color: black;
+}
+
+.btn-blacklist:hover {
+    color: darkgray;
+}
+
+/***************************************************************************/
+/* Clan War */
+/***************************************************************************/
+div .right
+{
+	float: right;
+}
+
+div .left
+{
+	float: left;
+}
+
+div .centerText
+{
+	text-align: center;
+}
+
+#spinnerTime,
+.spinnerStars,
+.spinnerAttacksOn,
+.spinnerXp
+{
+	margin-top: 1px !important;
+	text-align: right;
+	vertical-align: top !important;
+	font-size: small !important;
+}
+
+#spinnerTime
+{
+	max-width: 70px;
+}
+
+.spinnerStars,
+.spinnerAttacksOn,
+.spinnerXp
+{
+	max-width: 20px;
+}
+
+.warTypeList
+{
+	width: 15%;
+}
+
+.noDataMessage
+{
+	color: red;
+}
+
+.warPicksList
+{
+	list-style-type: none;
+}
+
+.clanWarStats
+{
+	margin-bottom: 10px !important;
+}
+
+.clanWarStats .statsMemberName,
+.clanMemberStats .statsMemberName
+{
+	width: 15%;
+}
+
+/***************************************************************************/
+/* Rankings */
+/***************************************************************************/
+#memberRankings
+{
+	width: 100%;
+	padding: 5px 0;
+}
+
+#memberRankingsHeader
+{
+	font-weight: bold;
+}
+
+.memberRankingsEvenRow,
+.memberRankingsOddRow
+{
+	padding: 5px;
+	border-style: solid;
+	border-color: gray;
+	border-width: thin;
+}
+
+.memberRankingsEvenRow
+{
+	background-color: #F8F8F8 !important;
+}
+
+.memberRankingsNewRow
+{
+	color: #000000 !important;
+}
+
+.rankingsField1
+{
+	width:20%;
+	max-width: 21%;
+	margin: 0 5px 0 0;
+}
+
+.rankingsField2
+{
+	width:8%;
+	margin: 0 5px 0 0;
+}
+
+.rankingsSpinnerField
+{
+	margin: 0 5px 0 0;
+}
+
+.rankingsNote
+{
+	width: 20%;
+	max-width: 21%
+}
+
+.rankingsSeasonOverallSpan
+{
+	padding: 0 10px 0 5px;
+}

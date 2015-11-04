@@ -1,0 +1,134 @@
+﻿@model HouseOfClans.Models.ViewModels.Groups.GroupsViewModel
+
+@{
+	ViewBag.Title = "Clan Groups";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("ClanLayout")
+<div class="panel panel-default panel-main">
+
+<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+    <h1 class="tab-title">Groups</h1>
+    @if (!Model.IsEditMode)
+    {
+        <p class="text-center">
+            <a href="@Url.Action("EditMode")" class="btn btn-lg glyph-btn edit-mode" title="Edit Mode">
+                <span class="glyphicon glyphicon-wrench btn-hover-black"></span> Edit Mode
+            </a>
+        </p>
+    }
+</div>
+
+<div>
+    <img src="~/Content/Images/Characters/Clash_Troops.png" class="image-large image-center">
+</div>
+
+<div class="panel-body">
+    @if (Model.Groups.Count > 0)
+    {
+        foreach (HouseOfClans.Models.ClanGroup group in Model.Groups)
+        {
+            <div class="panel panel-danger text-center">
+                <div class="panel-heading">
+                    <h3>"@group.name"</h3>
+                </div>
+                <div class="container-fluid" style="margin-top:10px;">
+                    <h3 class="text-center" style="margin-top: 0px;">Group Leader</h3>
+                    <h4 class="text-center"><span class="glyphicon glyphicon-fire icon" aria-hidden="true"></span>@Model.GetGroupLeader(group.groupLeaderId).name</h4>
+                    <hr />
+                </div>
+                    @if (Model.GetGroupMembers(group.id).Count > 0)
+                    {
+                        <table class="table table-condensed table-bordered">
+                            @foreach (HouseOfClans.Models.ClanUser member in Model.GetGroupMembers(group.id))
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <h4>
+                                                @if (member.userRoleId == 3)
+                                                {
+                                                    <span class="glyphicon glyphicon-leaf icon" aria-hidden="true"></span>
+                                                }
+                                                @member.name
+                                            </h4>
+                                        </td>
+
+                                        <td><h4>@Enum.GetName(typeof(HouseOfClans.Enums.ClanRole), member.userRoleId)</h4></td>
+                                        @if (Model.IsEditMode)
+                                        {
+                                            <td>
+                                                <a href="@Url.Action("Move", new { memberId = member.id, groupId = group.id })" class="btn btn-lg glyph-btn" title="Move Group Member">
+                                                    <span class="glyphicon glyphicon-transfer btn-promote btn-hover-black"></span>
+                                                </a>
+
+                                                <a href="@Url.Action("Remove", new { memberId = member.id })" class="btn btn-lg glyph-btn" title="Remove Group Member">
+                                                    <span class="glyphicon glyphicon-remove-circle btn-remove btn-hover-black"></span>
+                                                </a>
+                                            </td>
+                                        }
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    }
+                    else
+                    {
+                        <h4>This group has no members.</h4>
+                    }
+            </div>
+        }
+    }
+    else
+    {
+        <h4 class="text-center">There are no groups for this clan.</h4>
+    }
+    
+    <div class="panel panel-info text-center">
+        <div class="panel-heading">
+            <h3>Free Agents</h3>
+        </div>
+        @if (Model.GetFreeAgents().Count > 0)
+        {
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    @foreach (HouseOfClans.Models.ClanUser agent in Model.GetFreeAgents())
+                    {
+                        <tr>
+                            <td><h4>
+                                @if (agent.userRoleId == 3)
+                                {
+                                    <span class="glyphicon glyphicon-leaf icon" aria-hidden="true"></span>
+                                }
+                                @agent.name</h4></td>
+                            <td><h4>@Enum.GetName(typeof(HouseOfClans.Enums.ClanRole), agent.userRoleId)</h4></td>
+
+                            @if (Model.IsEditMode)
+                            {
+                                <td>
+                                    <a href="@Url.Action("Move", new { memberId = agent.id })" class="btn btn-lg glyph-btn" title="Move Group Member">
+                                        <span class="glyphicon glyphicon-transfer btn-promote btn-hover-black"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <h4>There are no free agents.</h4>
+        }
+    </div>
+
+    <div class="col-md-offset-2 col-md-10">
+        @if (Model.IsEditMode)
+        {
+            <input type="button" class="btn btn-default" value="Create Group" onclick="location.href='@Url.Action("Create", "Groups")'" />
+            <input type="button" class="btn btn-default" value="Exit Edit Mode" onclick="location.href='@Url.Action("Index", "Groups")'" />
+        }
+    </div>
+</div>
+</div>

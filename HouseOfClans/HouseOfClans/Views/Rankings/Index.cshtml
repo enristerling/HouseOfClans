@@ -1,0 +1,179 @@
+﻿@model HouseOfClans.Models.ViewModels.Rankings.RankingsUpsertViewModel
+@using HouseOfClans.Managers;
+@using HouseOfClans.Models.ViewModels.Rankings;
+
+@{
+	ViewBag.Title = "Member Rankings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool hasData = Model != null && Model.MemberRankings.Any();
+	bool isOverall = false;
+	ClanMemberStatsViewModel clanWarStats = new ClanMemberStatsViewModel();
+	
+	if (ViewBag.IsOverall != null)
+	{
+		isOverall = (bool)ViewBag.IsOverall;
+	}
+
+	if (hasData)
+	{
+		int warId = Model.MemberRankings.First().ClanWarId;
+
+		clanWarStats = Model.ClanWarRankings;
+	}
+
+	int rowCount = 0;
+	ViewBag.isIndex = true;
+}
+
+<script type="text/javascript">
+	function SetSpinners() {
+		$(".spinnerStars").spinner({
+			spin: function (event, ui) {
+				if (ui.value > 3) {
+					$(this).spinner("value", 0);
+					return false;
+				} else if (ui.value < 0) {
+					$(this).spinner("value", 3);
+					return false;
+				}
+			}
+		});
+
+		$(".spinnerAttacksOn").spinner({
+			spin: function (event, ui) {
+				if (ui.value > 20) {
+					$(this).spinner("value", 0);
+					return false;
+				} else if (ui.value < 0) {
+					$(this).spinner("value", 20);
+					return false;
+				}
+			}
+		});
+	}
+</script>
+
+@Html.Partial("ClanLayout")
+
+@using (Html.BeginForm("Index", "Rankings", FormMethod.Post, new { id = "RankingsForm", name = "RankingsForm" }))
+{
+	@Html.AntiForgeryToken()
+	@Html.Hidden("IsOverall", isOverall)
+
+	<div class="panel panel-default panel-main">
+		<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+			<h1 class="tab-title">@ViewBag.Title</h1>
+		</div>
+
+		@if (hasData)
+		{
+			<div class="right">
+				<input type="radio" name="IsOverallOption" value="0" onclick="SubmitForResults(false);" @(isOverall ? "" : "checked") /><span class="rankingsSeasonOverallSpan">Current War</span>
+				<input type="radio" name="IsOverallOption" value="1" onclick="SubmitForResults(true);" @(isOverall ? "checked" : "") /><span class="rankingsSeasonOverallSpan">Overall</span>
+			</div>
+
+			//vv Yes, this could/should go in a partial, but giving me a "does not contain a definition for renderpartial" and I think it's because of the IEnumerable model for this view. :(
+			//TODO //vv create the clanWarTotals css class
+			<table class="clanWarStats table table-condensed table-bordered">
+				<tbody>
+					<tr>
+						<th class="statsMemberName">Clan</th>
+
+						@if (isOverall)
+						{
+							<th>Wars</th>
+						}
+
+						<th>Attacks</th>
+						<th>
+							<span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+						</th>
+						<th id="heroicHeader" colspan="2">Heroics</th>
+						<th colspan="2">Attacks Defended</th>
+					</tr>
+					<tr>
+						<td>
+							Totals:
+						</td>
+
+						@if (isOverall)
+						{
+							<td>
+								@Html.DisplayFor(p => clanWarStats.WarsCount)
+							</td>
+						}
+
+						<td>
+							@Html.DisplayFor(p => clanWarStats.TotalAttacks)
+						</td>
+						<td>
+							@Html.DisplayFor(p => clanWarStats.Stars)
+						</td>
+						<td>
+							<span>Attacks:</span>
+							@Html.DisplayFor(p => clanWarStats.TotalHeroicAttack)
+						</td>
+						<td>
+							<span>Defenses:</span>
+							@Html.DisplayFor(p => clanWarStats.TotalHeroicDefense)
+						</td>
+						<td colspan="2">
+							@Html.DisplayFor(p => clanWarStats.AttacksDefended)
+							<span> of </span>
+							@Html.DisplayFor(p => clanWarStats.AttacksOn)
+						</td>
+					</tr>
+				<tbody>
+			</table>
+
+			@*//TODO //vv Display opponent's clan name?*@
+			
+			<ul id="memberRankings" class="list-group">
+				<li id="memberRankingsHeader" class="list-group-item">
+					<div class="rankingsField1 left centerText">Member</div>
+					
+					@if (isOverall)
+					{
+						<div class="rankingsField2 left centerText">Wars</div>
+					}
+					
+					<div class="rankingsField2 left centerText">Stars</div>
+					<div class="rankingsField1 left centerText">Heroic@(isOverall ? "s" : "")</div>
+					<div class="rankingsField1 left centerText">Attacks Defended</div>
+					<div class="centerText @(!isOverall ? "rankingsField2 left" : "")">XP</div>
+
+					@if (!isOverall)
+					{
+						<div class="centerText">Note</div>
+					}
+				</li>
+
+				@foreach (var ranking in Model.MemberRankings.OrderByDescending(o => o.Id))
+				{
+					rowCount++;
+					ViewBag.RowCount = rowCount;
+					Html.RenderPartial("_ClanMemberStatsViewModel", ranking);
+				}
+			</ul>
+		}
+		else
+		{
+		<span class="noDataMessage">No data to display, this clan does not have any wars yet.</span>
+		}
+</div>
+}
+
+<script type="text/javascript">
+	@if (hasData)
+	{
+		@:function SubmitForResults(IsOverall) {
+		@:	$("#IsOverall").val(IsOverall)
+		@:	$("#RankingsForm").submit();
+		@:}
+	}
+	
+	$(document).ready(function () {
+		SetSpinners();
+	});
+</script>

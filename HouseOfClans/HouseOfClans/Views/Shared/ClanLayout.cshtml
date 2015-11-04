@@ -1,0 +1,81 @@
+﻿@using HouseOfClans.Managers;
+@using HouseOfClans.Models.ViewModels;
+@using HouseOfClans.Controllers.Security;
+@using Microsoft.AspNet.Identity;
+
+@{
+	int? clanId = Context.GetCurrentLoginInformation().clanId;
+	string clanShield = string.Empty;
+	string clanName = string.Empty;
+	bool hasClan = clanId != null && clanId > 0;
+	
+	if (hasClan)
+	{
+		ClanInfoViewModel clanInfo = new ClanInfoViewModel((int)clanId, false);
+		clanShield = clanInfo.ShieldLogoLocation;
+		clanName = clanInfo.ClanName;	
+	}
+	
+	byte activePage = 1;
+	string pageTitle = ViewBag.Title ?? string.Empty;
+	
+	switch (pageTitle)
+	{
+		case "Clan Info":
+		case "Edit Description":
+		case "Edit Rule":
+		case "Add Rule":
+			activePage = 1;
+			break;
+		case "Clan Members":
+		case "Create Member":
+			activePage = 2;
+			break;
+		case "Clan Groups":
+		case "Create Group":
+		case "Move To A Group":
+			activePage = 3;
+			break;
+		case "Member Rankings":
+		case "Clan War Member Stats":
+			activePage = 4;
+			break;
+		case "Clan War Details":
+		case "Edit Clan War":
+		case "Clan War":
+		case "War Picks":
+			activePage = 5;
+			break;
+		case "Blacklist":
+			activePage = 7;
+			break;
+		case "Clan Event Log":
+			activePage = 8;
+			break;
+		default:
+			activePage = 1;
+			break;
+	}
+}
+<div class="navbar navbar-inverse clan-navbar">
+    <div class="navbar-header">
+		@if (hasClan)
+		{
+			<img src="@clanShield" class="clan-shield">
+			@Html.ActionLink(@clanName, "Index", "MyClan", new { area = "" }, new { @class = "navbar-brand clan-abbreviation" })
+		}
+    </div>
+    <div class="">
+        <ul class="nav navbar-nav">
+			<li class="@(activePage == 1 ? "active" : "")">@Html.ActionLink("Clan Info", "Index", "ClanInfo")</li>
+			<li class="@(activePage == 2 ? "active" : "")">@Html.ActionLink("Members", "Index", "Members")</li>
+			<li class="@(activePage == 3 ? "active" : "")">@Html.ActionLink("Groups", "Index", "Groups")</li>
+            <li class="@(activePage == 4 ? "active" : "")">@Html.ActionLink("Rankings", "Index", "Rankings")</li>
+			<li class="@(activePage == 5 ? "active" : "")">@Html.ActionLink("Clan War", "Index", "ClanWar")</li>
+			@*//vv is this needed? <li class="@(activePage == 6 ? "active" : "")">@Html.ActionLink("War Log", "Index", "WarLog")</li>*@
+			<li class="@(activePage == 7 ? "active" : "")">@Html.ActionLink("Blacklist", "Index", "Blacklist")</li>
+			@*//vv Not ready yet. Need to add these Views <li class="@(activePage == 8 ? "active" : "")">@Html.ActionLink("Event Log", "Index", "EventLog")</li>*@
+        </ul>
+    </div>
+</div>
+

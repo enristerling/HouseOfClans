@@ -1,0 +1,86 @@
+﻿@model HouseOfClans.Models.ViewModels.ClanInfoViewModel
+
+@{
+    ViewBag.Title = "Clan Info";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("ClanLayout")
+
+<div class="panel panel-default panel-main">
+<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+    <h1 class="tab-title">Clan Info</h1>
+    @if (!Model.IsEditMode)
+    {
+        <p class="text-center">
+            <a href="@Url.Action("EditMode")" class="btn btn-lg glyph-btn edit-mode" title="Edit Mode">
+                <span class="glyphicon glyphicon-wrench btn-hover-black"></span> Edit Mode
+            </a>
+        </p>
+    }
+</div>
+
+
+<div class="panel-body" style="padding-top:0px;">
+    <div class="jumbotron clan-banner">
+        <h1 class="text-center clan-name">@Model.ClanName</h1>
+    </div>
+
+    <div>
+        <h3 class="text-center">
+            @Model.Description
+            @*If Leader *@
+            @if (Model.IsEditMode)
+            {
+                <a href="@Url.Action("EditDescription", new { clanId = Model.ClanId })" class="btn glyph-btn" title="Edit">
+                    <span class="glyphicon glyphicon-pencil btn-edit"></span>
+                </a>
+            }
+        </h3>
+    </div>
+
+    <div class="panel panel-warning border-round" style="margin-top:20px;">
+        <div class="panel-heading border-round">
+            <h1 class="tab-title">Rules</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <img src="~/Content/Images/Characters/Clash_King.png" class="image-large hidden-sm hidden-xs">
+        @if (Model.Rules != null && Model.Rules.Count > 0)
+        {
+            foreach (var rule in Model.Rules)
+            {
+                <div>
+                    <h3>
+                        <span class="glyphicon glyphicon-flag icon" aria-hidden="true"></span>@rule.description
+                        @* If Leader or Co-Leader *@
+                        @if (Model.IsEditMode)
+                        {
+                            <a href="@Url.Action("EditRule", new { ruleId = rule.id })" class="btn glyph-btn" title="Edit">
+                                <span class="glyphicon glyphicon-pencil btn-edit"></span>
+                            </a>
+                            <a href="@Url.Action("Delete", new { ruleId = rule.id })" class="btn glyph-btn" title="Delete">
+                                <span class="glyphicon glyphicon-remove-circle btn-remove"></span>
+                            </a>
+                        }
+                    </h3>
+                </div>
+            }
+        }
+        else
+        {
+            <h4>This clan has no rules. Go to Edit Mode and add rules!</h4>
+        }
+    </div>
+
+    @* TODO: Do this only if its leader or coleader *@
+    @if (Model.IsEditMode)
+    {
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Add Rule" onclick="location.href='@Url.Action("AddRule", "ClanInfo" )'" />
+            <input type="button" class="btn btn-default" value="Exit Edit Mode" onclick="location.href='@Url.Action("Index", "ClanInfo")'" />
+        </div>
+    }
+</div>
+</div>

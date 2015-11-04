@@ -1,0 +1,56 @@
+﻿@model IEnumerable<HouseOfClans.Models.ViewModels.ClanWarPick.ClanWarPickViewModel>
+
+@{
+    ViewBag.Title = "War Picks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Html.Partial("ClanLayout")
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="panel panel-default panel-main">
+		<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+			<h1 class="tab-title">@ViewBag.Title</h1>
+		</div>
+		<hr />
+
+		<div class="left">Clan</div>
+		<div class="left">Pick</div>
+		<div>Note</div>
+		<ul id="sortable" class="warPicksList">
+			@Html.EditorForModel()
+		</ul>
+
+		<div class="form-group">
+			<div class="col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" />
+
+				@Html.ActionLink("Back to Details", "Edit", "ClanWar", new { id = Model.First().ClanWarId }, new { @class = "btn btn-default" })
+			</div>
+		</div>
+	</div>
+}
+
+<script type="text/javascript">
+	$(function () {
+		$("#sortable").sortable({
+			revert: true,
+			update: function (event, ui) {
+				$.ajax({
+					url: '@Url.Action("SaveSortablePicks", "WarPicks")',
+					type: 'POST',
+					cache: false,
+					contentType: 'application/json',
+					data: JSON.stringify({ sortedPicks: $(this).sortable('toArray') }),
+					success: function (result) {
+						//vv Maybe do something here? display confirmation?, we might also want to add the error property just in case ...
+					}
+				});
+			}
+		});
+	});
+</script>

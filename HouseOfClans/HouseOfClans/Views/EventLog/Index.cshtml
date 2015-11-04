@@ -1,0 +1,77 @@
+﻿@model IEnumerable<HouseOfClans.Models.ActionLog>
+@using HouseOfClans.Managers;
+
+@{
+	ViewBag.Title = "Clan Event Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	int odd = 0;
+
+	Dictionary<int, string> websiteUsers = ClanUserManager.SelectAll().Where(p => Model.Select(m => m.userClanId).ToList().Contains(p.id)).ToDictionary(key => key.id, value => value.name);
+}
+
+@Html.Partial("ClanLayout")
+
+<div class="panel panel-default panel-main">
+	<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+		<h1 class="tab-title">Event Log</h1>
+	</div>
+
+	<div class="panel-body">
+		<table class="table-bordered">
+			<thead>
+				<tr>
+					<th>
+						@Html.LabelFor(p => Model.First().addedOn)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().actionId)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().userClanId)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().objectChanged)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().propertyChanged)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().oldValue)
+					</th>
+					<th>
+						@Html.LabelFor(p => Model.First().newValue)
+					</th>
+				</tr>
+			</thead>
+			@foreach (var log in Model)
+			{
+				odd++;
+				<tr style="background-color: @((odd % 2) == 1 ? "silver" : "white")">
+					<td>
+						@Html.DisplayFor(p => log.addedOn)
+					</td>
+					<td>
+						@Html.DisplayFor(p => log.actionId)
+					</td>
+					<td>
+						@websiteUsers.Where(p => p.Key == log.userClanId).First().Value
+						[@Html.DisplayFor(p => log.userClanId)]
+					</td>
+					<td>
+						@Html.DisplayFor(p => log.objectChanged)
+					</td>
+					<td>
+						@Html.DisplayFor(p => log.propertyChanged)
+					</td>
+					<td>
+						@Html.DisplayFor(p => log.oldValue)
+					</td>
+					<td>
+						@Html.DisplayFor(p => log.newValue)
+					</td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>

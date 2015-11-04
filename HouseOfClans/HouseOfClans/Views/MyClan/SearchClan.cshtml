@@ -1,0 +1,22 @@
+﻿@model HouseOfClans.Models.Clan
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Clan Name</th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.name</td>
+            <td>
+                <a href="@Url.Action("RequestJoin", new { clanId = Model.id })" class="btn btn-sm btn-primary" title="Request Join">
+                    Request Join
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+

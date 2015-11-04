@@ -1,0 +1,79 @@
+﻿@model HouseOfClans.Models.ViewModels.ClanWar.ClanWarViewModel
+
+@{
+    ViewBag.Title = "Clan War";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool isWarOngoing = Model.ClanWarList.Where(p => !p.isFinalized).Any();
+}
+
+@Html.Partial("ClanLayout")
+
+@if (!isWarOngoing)
+{
+	<nav>
+		<ul class="pager">
+			<li class="next">
+				@Html.ActionLink("Create New", "Create")
+			</li>
+		</ul>
+	</nav>
+}
+
+<div class="panel panel-default panel-main">
+	<table class="table">
+		<tr>
+			<th>@Html.LabelFor(model => model.ClanName)</th>
+			<th>Opponent</th>
+			<th>War Type</th>
+			<th>War Started On</th>
+			<th>Note</th>
+		</tr>
+
+		@foreach (var item in Model.ClanWarList)
+		{
+			//If war day already started then disable the edit/delete options.
+			bool hasWarStarted = false;
+			hasWarStarted = item.warStartedOn < DateTime.Now;
+			
+			string warType = Model.GetWarType(item.warTypeId);
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => modelItem.ClanName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.clanVS)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => warType)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.warStartedOn)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.note)
+				</td>
+				<td>
+					<ul class="nav nav-pills">
+						@if (hasWarStarted)
+						{
+							<li role="presentation">@Html.ActionLink("Details", "Details", new { id = item.id })</li>
+							<li role="presentation">@Html.ActionLink("Stats", "Edit", "Rankings", new { id = item.id }, null)</li>
+
+							if (!item.isFinalized)
+							{
+								<li role="presentation">@Html.ActionLink("Finalize", "Finalize", new { id = item.id })</li>
+							}
+						}
+						else
+						{
+							<li role="presentation">@Html.ActionLink("Edit", "Edit", new { id = item.id })</li>
+							<li role="presentation">@Html.ActionLink("Delete", "Delete", new { id = item.id })</li>
+						}
+					</ul>
+				</td>
+			</tr>
+		}
+
+	</table>
+</div>

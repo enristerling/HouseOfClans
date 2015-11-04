@@ -1,0 +1,152 @@
+﻿@model HouseOfClans.Models.ViewModels.ClanWar.ClanWarUpsertViewModel
+@using HouseOfClans.Managers;
+@using HouseOfClans.Models;
+@using HouseOfClans.Models.ViewModels.ClanWarPick;
+
+@{
+	string action = Model.Id == null ? "New" : "Edit";
+	
+    ViewBag.Title = string.Format("{0} Clan War", action);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	List<WarType> warTypeList = WarTypeManager.GetAll();
+	string defaultStartTime = Model.WarStartedOn.ToString("hh:mm tt");
+}
+
+<script src="~/Scripts/globalize/globalize.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript">
+	function SetWarStartedOn() {
+		$("#WarStartedOn").val($("#datepicker").val() + " " + $("#spinnerTime").val());
+	}
+
+	$.widget("ui.timespinner", $.ui.spinner, {
+		options: {
+			// seconds
+			step: 60 * 1000,
+			// hours
+			page: 60
+		},
+
+		_parse: function (value) {
+			if (typeof value === "string") {
+				// already a timestamp
+				if (Number(value) == value) {
+					return Number(value);
+				}
+				return +Globalize.parseDate(value);
+			}
+
+			return value;
+		},
+
+		_format: function (value) {
+			return Globalize.format(new Date(value), "t");
+		}
+	});
+
+	$(function () {
+		$("#spinnerTime").timespinner({
+			stop: function (e, ui) {
+				SetWarStartedOn();
+			}
+		});
+
+		$("#datepicker").datepicker({
+			showOn: "button",
+			buttonImage: "../../Content/Images/calendar.gif",
+			buttonImageOnly: true,
+			buttonText: "Select date",
+			defaultDate: "@Model.WarStartedOn.ToShortDateString()",
+			onSelect: function (dateText) {
+				SetWarStartedOn();
+			}
+
+		});
+	});
+</script>
+
+@Html.Partial("ClanLayout")
+
+@using (Html.BeginForm("Edit", "ClanWar"))
+{
+    @Html.AntiForgeryToken()
+
+	<div class="panel panel-default panel-main">
+		<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+			<h1 class="tab-title">@ViewBag.Title</h1>
+		</div>
+
+		<hr />
+		@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+		@Html.HiddenFor(model => model.Id)
+		@Html.HiddenFor(model => model.ClanId)
+		@Html.HiddenFor(model => model.AddedOn)
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.WarTypeId, "War Type", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.DropDownList("WarTypeId", new SelectList(warTypeList.Select(p => new { Value = p.id, Text = p.name }), "Value", "Text", Model.WarTypeId), htmlAttributes: new { @class = "form-control warTypeList" })
+				@Html.ValidationMessageFor(model => model.WarTypeId, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.ClanVS, "Opponent Clan", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.ClanVS, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.ClanVS, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.ClanVSTag, "Opponent Clan Tag", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.EditorFor(model => model.ClanVSTag, new { htmlAttributes = new { @class = "form-control" } })
+				@Html.ValidationMessageFor(model => model.ClanVSTag, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.WarStartedOn, "War Starts On", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.HiddenFor(model => model.WarStartedOn)
+				<input type="text" id="datepicker" value="@Model.WarStartedOn.ToShortDateString()">
+				<input type="text" id="spinnerTime" name="spinnerTime" value="@defaultStartTime">
+
+				@Html.ValidationMessageFor(model => model.WarStartedOn, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		<div class="form-group">
+			@Html.LabelFor(model => model.Note, "Note", htmlAttributes: new { @class = "control-label col-md-2" })
+			<div class="col-md-10">
+				@Html.TextAreaFor(model => model.Note, new { @class = "form-control", rows = "5", cols = "50" })
+				@Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+			</div>
+		</div>
+
+		@if (Model.Id != null && Model.Id > 0)
+		{
+			<div class="form-group">
+				<label class="control-label col-md-2">Picks</label>
+				<div class="col-md-10">
+					@Html.ActionLink("Select War Matchups", "Edit", "WarPicks", new { id = Model.Id }, null)
+				</div>
+			</div>
+		}
+
+		<div class="form-group">
+			<div class="col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" />
+
+				@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+			</div>
+		</div>
+	</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

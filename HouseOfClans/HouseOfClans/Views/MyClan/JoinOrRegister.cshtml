@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Join/Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    AjaxOptions options = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        UpdateTargetId = "clanResults",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
+
+<h2>Join or Register a Clan</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Join a clan</h4>
+        <hr/>
+        <p>Search for a clan and join!</p>
+        @* TODO: Search for clan by tag  *@
+        @using (Ajax.BeginForm("SearchClan", options))
+        {
+            @Html.TextBox("clanTag")
+            <input type="submit" value="OK" />
+        }
+        <div id="clanResults">
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+        <h4>Create a clan.</h4>
+        <hr/>
+        <p>Create a clan and become the leader!</p>
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Register Clan" onclick="location.href='@Url.Action("RegisterClan", "MyClan")'" />
+        </div>
+    </div>
+
+</div>

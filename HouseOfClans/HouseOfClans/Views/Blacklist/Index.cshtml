@@ -1,0 +1,50 @@
+﻿@model HouseOfClans.Models.ViewModels.Blacklist.BlacklistViewModel
+
+@{
+	ViewBag.Title = "Blacklist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("ClanLayout")
+
+<div class="panel panel-primary" style="border-color:black;">
+    <div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+        <h3 class="tab-title"><span class="glyphicon glyphicon-list-alt icon" aria-hidden="true"></span>BlackList</h3>
+    </div>
+    @if (Model.BlacklistedUsers.Count > 0)
+    {
+        <table class="table table-condensed table-bordered">
+            <tbody>
+                @foreach (var blUser in Model.BlacklistedUsers)
+                {
+                    <tr>
+                        <td><h4>@Html.DisplayFor(m => blUser.VillageName)</h4></td>
+                        <td><h4>@Html.DisplayFor(m => blUser.BlacklistEntity.note)</h4></td>
+                        @if (Model.IsEditMode)
+                        {
+                            <td>
+                                <a href="@Url.Action("Demote", new { blacklistId = blUser.BlacklistEntity.id })" class="btn btn-lg glyph-btn" title="Demote Member">
+                                    <span class="glyphicon glyphicon-download btn-demote btn-hover-black"></span>
+                                </a>
+
+                                <a href="@Url.Action("DeleteMember", new { blacklistId = blUser.BlacklistEntity.id })" class="btn btn-lg glyph-btn" title="Remove Member">
+                                    <span class="glyphicon glyphicon-remove-circle btn-remove btn-hover-black"></span>
+                                </a>
+
+                                <a href="@Url.Action("BlacklistMember", new { blacklistId = blUser.BlacklistEntity.id })" class="btn btn-lg glyph-btn" title="Blacklist Member">
+                                    <span class="glyphicon glyphicon-ban-circle btn-blacklist"></span>
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
+            <tbody>
+        </table>
+    }
+    else
+    {
+        <div class="panel-body">
+            <h4 class="text-center">This clan has no blacklisted members</h4>
+        </div>
+    }
+</div>

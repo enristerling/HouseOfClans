@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ddfc45fb38f242b18893a25ebc91644f" Name="Diagram1">
+        <EntityTypeShape EntityType="HouseOfClansModel.ActionLog" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.Action" Width="1.5" PointX="6" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.ClanGroup" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.Clan" Width="1.5" PointX="0.75" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.ClanUser" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.ClanWarPick" Width="1.75" PointX="2.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.ClanWar" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.Rule" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.UserBlackList" Width="1.5" PointX="11.25" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.UserRole" Width="1.5" PointX="3.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.WarLog" Width="1.5" PointX="11.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HouseOfClansModel.WarType" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ActionLog_Action" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ActionLog_UserClan" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanGroup_Clan" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanUser_Clan" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanWar_Clan" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_UserBlackList_Clan" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanUser_UserRole" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_UserBlackList_ClanUser" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarLog_ClanUser_Attack" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarLog_ClanUser_Defense" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanWar_WarType" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarLog_ClanWar" ManuallyRouted="false" />
+        <AssociationConnector Association="HouseOfClansModel.FK_Rules_ToClan" />
+        <EntityTypeShape EntityType="HouseOfClansModel.C__MigrationHistory1" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="HouseOfClansModel.AspNetRole" Width="1.5" PointX="13.375" PointY="2.5" />
+        <EntityTypeShape EntityType="HouseOfClansModel.AspNetUserClaim" Width="1.5" PointX="17.875" PointY="1" />
+        <EntityTypeShape EntityType="HouseOfClansModel.AspNetUserLogin" Width="1.5" PointX="17.875" PointY="3.75" />
+        <EntityTypeShape EntityType="HouseOfClansModel.AspNetUser" Width="1.5" PointX="15.625" PointY="1.25" />
+        <AssociationConnector Association="HouseOfClansModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HouseOfClansModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="HouseOfClansModel.FK_ClanUsers_AspNetUserId" />
+        <AssociationConnector Association="HouseOfClansModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="HouseOfClansModel.WarRanking" Width="1.5" PointX="8.25" PointY="12.625" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarRankings_ClanGroup" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarRankings_ClanUser" />
+        <AssociationConnector Association="HouseOfClansModel.FK_WarRankings_ClanWar" />
+        <EntityTypeShape EntityType="HouseOfClansModel.Request" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

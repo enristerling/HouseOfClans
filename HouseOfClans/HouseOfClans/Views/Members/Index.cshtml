@@ -1,0 +1,203 @@
+﻿@model HouseOfClans.Models.ViewModels.Members.MembersViewModel
+
+@{
+	ViewBag.Title = "Clan Members";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("ClanLayout")
+
+<div class="panel panel-default panel-main">
+
+<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+    <h1 class="tab-title">Members</h1>
+    @if (!Model.IsEditMode)
+    {
+        <p class="text-center">
+            <a href="@Url.Action("EditMode")" class="btn btn-lg glyph-btn edit-mode" title="Edit Mode">
+                <span class="glyphicon glyphicon-wrench btn-hover-black"></span> Edit Mode
+            </a>
+        </p>
+    }
+</div>
+
+<div class="panel-body">
+    <div class="panel panel-info text-center">
+        <div class="panel-heading">
+            <h3><span class="glyphicon glyphicon-star icon" aria-hidden="true"></span>@Html.LabelFor(m => m.Leader)</h3>
+        </div>
+        <div class="panel-body">
+            <h4>@Html.DisplayFor(m => m.Leader.name)</h4>
+        </div>
+    </div>
+
+    <div class="panel panel-danger text-center">
+        <div class="panel-heading">
+            <h3><span class="glyphicon glyphicon-fire icon" aria-hidden="true"></span>@Html.LabelFor(m => m.CoLeaders)</h3>
+        </div>
+        @if (Model.CoLeaders.Count > 0)
+        {
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    @foreach (var coLeader in Model.CoLeaders)
+                    {
+                        <tr>
+                            <td><h4>@Html.DisplayFor(m => coLeader.name)</h4></td>
+                            @if (Model.IsEditMode)
+                            {
+                                <td>
+                                    <a href="@Url.Action("Demote", new { memberId = coLeader.id })" class="btn btn-lg glyph-btn" title="Demote Member">
+                                        <span class="glyphicon glyphicon-download btn-demote btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Remove", new { memberId = coLeader.id })" class="btn btn-lg glyph-btn" title="Remove Member">
+                                        <span class="glyphicon glyphicon-remove-circle btn-remove btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Create", "Blacklist", new { memberId = coLeader.id })" class="btn btn-lg glyph-btn" title="Blacklist Member">
+                                        <span class="glyphicon glyphicon-ban-circle btn-blacklist"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                <tbody>
+            </table>
+        }
+        else
+        {
+            <div class="panel-body">This clan has no Co-Leaders</div>
+        }
+    </div>
+
+    <div class="panel panel-success text-center">
+        <div class="panel-heading">
+            <h3><span class="glyphicon glyphicon-leaf icon" aria-hidden="true"></span>@Html.LabelFor(m => m.Elders)</h3>
+        </div>
+        @if (Model.Elders.Count > 0)
+        {
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    @foreach (var elder in Model.Elders)
+                    {
+                        <tr>
+                            <td><h4>@Html.DisplayFor(m => elder.name)</h4></td>
+                            @if (Model.IsEditMode)
+                            {
+                                <td>
+                                    <a href="@Url.Action("Promote", new { memberId = elder.id })" class="btn btn-lg glyph-btn" title="Promote Member">
+                                        <span class="glyphicon glyphicon-upload btn-promote btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Demote", new { memberId = elder.id })" class="btn btn-lg glyph-btn" title="Demote Member">
+                                        <span class="glyphicon glyphicon-download btn-demote btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Remove", new { memberId = elder.id })" class="btn btn-lg glyph-btn" title="Remove Member">
+                                        <span class="glyphicon glyphicon-remove-circle btn-remove btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Create", "Blacklist", new { memberId = elder.id })" class="btn btn-lg glyph-btn" title="Blacklist Member">
+                                        <span class="glyphicon glyphicon-ban-circle btn-blacklist"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                <tbody>
+            </table>
+        }
+        else
+        {
+            <div class="panel-body">This clan has no Elders</div>
+        }
+    </div>
+
+    <div class="panel panel-primary text-center">
+        <div class="panel-heading">
+            <h3>@Html.LabelFor(m => m.RegularMembers)</h3>
+        </div>
+        @if (Model.RegularMembers.Count > 0)
+        {
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    @foreach (var member in Model.RegularMembers)
+                    {
+                        <tr>
+                            <td><h4>@Html.DisplayFor(m => member.name)</h4></td>
+                            @if (Model.IsEditMode)
+                            {
+                                <td>
+                                    <a href="@Url.Action("Promote", new { memberId = member.id })" class="btn btn-lg glyph-btn" title="Promote Member">
+                                        <span class="glyphicon glyphicon-upload btn-promote btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Remove", new { memberId = member.id })" class="btn btn-lg glyph-btn" title="Remove Member">
+                                        <span class="glyphicon glyphicon-remove-circle btn-remove btn-hover-black"></span>
+                                    </a>
+
+                                    <a href="@Url.Action("Create", "Blacklist", new { memberId = member.id })" class="btn btn-lg glyph-btn" title="Blacklist Member">
+                                        <span class="glyphicon glyphicon-ban-circle btn-blacklist"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                <tbody>
+            </table>
+        }
+        else
+        {
+            <div class="panel-body">This clan has no regular members</div>
+        }
+    </div>
+
+    @if(Model.Requests.Count > 0)
+    { 
+        <div class="panel panel-default text-center">
+            <div class="panel-heading">
+                <h3>Requests</h3>
+            </div>
+
+            <table class="table table-condensed table-bordered">
+                <tbody>
+                    @foreach (HouseOfClans.Models.Request req in Model.Requests)
+                    {
+                        <tr>
+                            <td>
+                                <h4>
+                                    @Model.GetName(req.aspnetUserId)
+                                </h4>
+                            </td>
+
+                            @if (Model.IsEditMode)
+                            {
+                                <td>
+                                    <a href="@Url.Action("AcceptMember", new { reqId = req.id, clanId = Model.ClanId })" class="btn btn-lg glyph-btn" title="Accept Member">
+                                        <span class="glyphicon glyphicon-ok btn-promote btn-hover-black"></span>
+                                    </a>
+                                    <a href="@Url.Action("MergeMember", new { reqId = req.id })" class="btn btn-lg glyph-btn" title="Merge Member">
+                                        <span class="glyphicon glyphicon-saved btn-edit btn-hover-black"></span>
+                                    </a>
+                                    <a href="@Url.Action("RejectMember", new { reqId = req.id })" class="btn btn-lg glyph-btn" title="Reject Member">
+                                        <span class="glyphicon glyphicon-remove btn-remove btn-hover-black"></span>
+                                    </a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+        @* TODO: Do this only if its leader or coleader *@
+        <div class="col-md-offset-2 col-md-10">
+            @if (Model.IsEditMode)
+            {
+                <input type="button" class="btn btn-default" value="Add Member" onclick="location.href='@Url.Action("Create", "Members")'" />
+                <input type="button" class="btn btn-default" value="Exit Edit Mode" onclick="location.href='@Url.Action("Index", "Members")'" />
+            }
+        </div>
+    </div>
+</div>
+

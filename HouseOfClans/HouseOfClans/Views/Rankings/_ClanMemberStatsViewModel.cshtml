@@ -1,0 +1,220 @@
+﻿@model HouseOfClans.Models.ViewModels.Rankings.ClanMemberStatsViewModel
+@using HouseOfClans.Views.HtmlHelpers;
+@using HouseOfClans.Managers;
+@using HouseOfClans.Controllers.Security;
+
+@{
+	bool isIndex = false;
+	bool isOverall = false;
+	bool isWarFinalized = false;
+	int rowCount = 1;
+	int clanId = (int)Context.GetCurrentLoginInformation().clanId;
+	string rowClass = "active memberRankingsNewRow";
+
+	if (ViewBag.IsIndex != null)
+	{
+		isIndex = (bool)ViewBag.IsIndex;
+	}
+
+	if (ViewBag.IsOverall != null)
+	{
+		isOverall = (bool)ViewBag.IsOverall;
+	}
+
+	if (ViewBag.IsWarFinalized != null)
+	{
+		isWarFinalized = ViewBag.IsWarFinalized;
+	}
+
+	if (ViewBag.RowCount != null)
+	{
+		rowCount = ViewBag.RowCount;
+
+		rowClass = rowCount % 2 == 0 ? "memberRankingsEvenRow" : "memberRankingsOddRow";
+	}
+
+	//vv Only show the available members: the ones in war and that have not make their 2 attacks. Add the member to the list thought if showing his/her attack.
+	Dictionary<int, string> availableAttacks = new Dictionary<int,string>();
+	
+	if (ViewBag.AvailableAttacks != null)
+	{
+		availableAttacks = ViewBag.AvailableAttacks;
+	}
+	
+	List<SelectListItem> memberList = new List<SelectListItem>();
+
+	foreach(KeyValuePair<int, string> available in availableAttacks)
+	{
+		SelectListItem memberListItem = new SelectListItem()
+		{
+			Value = available.Key.ToString(),
+			Text = available.Value
+		};
+
+		memberList.Add(memberListItem);
+	}
+	
+	if (Model != null && Model.Id > 0 && !availableAttacks.Where(p => p.Key == Model.ClanUserId).Any())
+	{
+		memberList.Add(new SelectListItem()
+		{
+			Value = Model.ClanUserId.ToString(),
+			Text = ClanUserManager.SelectByClanUserId(Model.ClanUserId).name
+		});
+	}
+
+	//TODO //vv if isWarFinalized then Make this page View Only. At this point the Save button does not exist in the page, but the fields are still editable.
+}
+
+@*//TODO //vv @Html.DisplayFor(p => p.ClanGroupId)*@
+@using (Html.BeginCollectionItem("memberRankingsFromForm"))
+{
+	<li class="list-group-item @rowClass">
+		<div class="rankingsField1 left">
+			@Html.HiddenFor(p => p.Id)
+			@Html.HiddenFor(p => p.ClanWarId)
+			@Html.HiddenFor(p => p.AddedOn)
+			@Html.HiddenFor(p => p.UpdatedOn)
+			@Html.HiddenFor(p => p.ClanGroupId)
+			@Html.HiddenFor(p => p.AttacksWon)
+			@Html.Hidden("clanId", clanId)
+
+			@if (!isIndex)
+			{
+				@Html.EditorFor(p => p.OptOut)
+				@Html.DropDownList("ClanUserId", new SelectList(memberList.Select(p => new { Value = p.Value, Text = p.Text }),
+														"Value",
+														"Text",
+														Model.ClanUserId))
+			}
+			else
+			{
+				@Html.DisplayFor(p => p.MemberName)
+			}
+		</div>
+
+		@if (isIndex)
+		{
+			if (isOverall)
+			{
+				<div class="rankingsField2 left centerText">
+					@Html.DisplayFor(p => p.WarsCount)
+				</div>
+			}
+		}
+
+		<div class="rankingsSpinnerField rankingsField2 left centerText">
+			@if (isIndex)
+			{
+				@Html.DisplayFor(p => p.Stars)
+			}
+			else
+			{
+				@Html.TextBoxFor(p => p.Stars, new { @class = "spinnerStars" })
+			}
+		</div>
+		<div class="rankingsField1 left centerText">
+			@if (isIndex)
+			{
+				if (isOverall)
+				{
+					<span>Attacks:</span>
+					@Html.DisplayFor(p => p.TotalHeroicAttack)
+				}
+				else
+				{
+					<span>@(Model.HasHeroicAttack ? "Attack" : "")&nbsp;</span>
+				}
+			}
+			else
+			{
+				@Html.EditorFor(p => p.HasHeroicAttack)
+				<span>Attack</span>
+			}
+
+			@if (isIndex)
+			{
+				if (isOverall)
+				{
+					<span>Defenses:</span>
+					@Html.DisplayFor(p => p.TotalHeroicDefense)
+				}
+				else
+				{
+					<span>@(Model.HasHeroicDefense ? Model.HasHeroicAttack ? " - Defense" : "Defense" : "")&nbsp;</span>
+				}
+			}
+			else
+			{
+				@Html.EditorFor(p => p.HasHeroicDefense)
+				<span>Defense</span>
+			}
+		</div>
+		<div class="rankingsField1 left centerText">
+			@if (isIndex)
+			{
+			@Html.DisplayFor(p => p.AttacksDefended)
+			}
+			else
+			{
+			@Html.TextBoxFor(p => p.AttacksDefended, new { @class = "spinnerAttacksOn" })
+			}
+			<span> of </span>
+			@if (isIndex)
+			{
+			@Html.DisplayFor(p => p.AttacksOn)
+			}
+			else
+			{
+			@Html.TextBoxFor(p => p.AttacksOn, new { @class = "spinnerAttacksOn" })
+			}
+		</div>
+		<div class="@(!isOverall ? "rankingsField2 left" : "")">
+			@if (isIndex)
+			{
+				@Html.DisplayFor(p => p.Xp)
+			}
+			else
+			{
+				@Html.TextBoxFor(p => p.Xp, new { @class = "spinnerXp" })
+			}
+		</div>
+
+		@*//vv This needs to be a setting for the Clans, and not hardcoded here.*@
+		@*//vv add later, it causes UI issues :(*@
+		@*@if (ClanManager.SelectByClanId(clanId).name.ToLower().Contains("aggie"))
+		{
+			<div>
+				@if (isIndex)
+				{
+					@Html.DisplayFor(p => p.AttackOn)
+				}
+				else
+				{
+					@Html.HiddenFor(p => p.AttackOn, new { @class = "spinnerXP" })
+					<input type="text" id="spinnerTime" name="spinnerTime" value="">
+				}
+			</div>
+		}*@
+		
+
+		@if (!isOverall)
+		{
+			<div>
+				@if (isIndex)
+				{
+					@Html.DisplayFor(p => p.Note)
+					@Html.Raw("&nbsp;")
+				}
+				else
+				{
+					@Html.TextBoxFor(p => p.Note, new { @class = "rankingsNote" })
+				}
+			</div>
+		}
+	</li>
+}
+
+<script type="text/javascript">
+	SetSpinners();
+</script>

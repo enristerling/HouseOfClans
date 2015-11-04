@@ -1,0 +1,166 @@
+﻿@model HouseOfClans.Models.ViewModels.Rankings.RankingsUpsertViewModel
+@using HouseOfClans.Controllers.Security;
+
+@{
+	ViewBag.Title = "Clan War Member Stats";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+	bool isWarFinalized = false;
+	bool disableSaveButton = Model == null || Model.MemberRankings.Count() == 0;
+	bool disableAddButton = !disableSaveButton && Model.AvailableAttacks.Count() == 0;
+	int clanId = (int)Context.GetCurrentLoginInformation().clanId;
+	int warId = ViewBag.WarId;
+	
+	if (ViewBag.IsWarFinalized != null)
+	{
+		isWarFinalized = ViewBag.IsWarFinalized;
+	}
+	
+	int rowCount = 0;
+	ViewBag.AvailableAttacks = Model.AvailableAttacks;
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript">
+	function SetWarStartedOn() {
+		$("#AttackOn").val($("#spinnerTime").val());
+	}
+
+	function SetSpinners() {
+		$(".spinnerStars").spinner({
+			spin: function (event, ui) {
+				if (ui.value > 3) {
+					$(this).spinner("value", 0);
+					return false;
+				} else if (ui.value < 0) {
+					$(this).spinner("value", 3);
+					return false;
+				}
+			}
+		});
+
+		$(".spinnerAttacksOn").spinner({
+			spin: function (event, ui) {
+				if (ui.value > 20) {
+					$(this).spinner("value", 0);
+					return false;
+				} else if (ui.value < 0) {
+					$(this).spinner("value", 20);
+					return false;
+				}
+			}
+		});
+
+		$.widget("ui.timespinner", $.ui.spinner, {
+			options: {
+				// seconds
+				step: 60 * 1000,
+				// hours
+				page: 60
+			},
+
+			_parse: function (value) {
+				if (typeof value === "string") {
+					// already a timestamp
+					if (Number(value) == value) {
+						return Number(value);
+					}
+					return +Globalize.parseDate(value);
+				}
+
+				return value;
+			},
+
+			_format: function (value) {
+				return Globalize.format(new Date(value), "t");
+			}
+		});
+
+		$("#spinnerTime").timespinner({
+			stop: function (e, ui) {
+				SetAttackOn();
+			}
+		});
+	}
+</script>
+
+@Html.Partial("ClanLayout")
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+	<div class="panel panel-default panel-main">
+		<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+			<h1 class="tab-title">Clan Stats</h1>
+		</div>
+		<nav>
+			<ul class="pager">
+				<li class="next @(disableAddButton ? "disabled" : "")"><a href="@Url.Action("AddAttack", new { id = clanId})" id="addMemberAttack"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Attack</a></li>
+			</ul>
+		</nav>
+
+		<div class="panel panel-default">
+
+			<ul id="memberRankings" class="list-group">
+				<li id="memberRankingsHeader" class="list-group-item">
+					<div class="rankingsField1 left centerText">Member</div>
+					<div class="rankingsField2 left centerText">Stars</div>
+					<div class="rankingsField1 left centerText">Heroic</div>
+					<div class="rankingsField1 left centerText">Attacks Defended</div>
+					<div class="rankingsField2 left centerText">XP</div>
+					<div class="centerText">Note</div>
+				</li>
+
+				@foreach (var ranking in Model.MemberRankings.OrderByDescending(o => o.Id))
+				{
+					rowCount++;
+					ViewBag.RowCount = rowCount;
+					Html.RenderPartial("_ClanMemberStatsViewModel", ranking);
+				}
+			</ul>
+
+			<div class="btn-group">
+				@if (!isWarFinalized)
+				{
+					<input type="submit" id="SaveButton" name="submit" value="Save" class="btn btn-default" />
+				}
+
+				@Html.ActionLink("Back to List", "Index", "ClanWar", null, new { @class = "btn btn-default" })
+			</div>
+		</div>
+	</div>
+}
+
+<script type="text/javascript">
+	$("#addMemberAttack").click(function () {
+		$.ajax({
+			url: this.href,
+			cache: false,
+			data: { id: @clanId, warId: @warId },
+			success: function (html) {
+				if ($('#memberRankings li').length > 1 ) {
+					$("#memberRankings li:eq(1)").before(html);
+				}
+				else
+				{
+					$("#memberRankings").append(html);
+				}
+				
+				$('#SaveButton').prop('disabled', false);
+			}
+		});
+
+		return false;
+	});
+
+	@if (disableSaveButton)
+	{
+		@:$('#SaveButton').prop('disabled', true);
+	}
+		
+	$(document).ready(function () {
+		SetSpinners();
+	});
+</script>

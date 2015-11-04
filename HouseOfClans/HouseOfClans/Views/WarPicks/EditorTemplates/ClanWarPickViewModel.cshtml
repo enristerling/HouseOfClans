@@ -1,0 +1,39 @@
+﻿@model HouseOfClans.Models.ViewModels.ClanWarPick.ClanWarPickViewModel
+
+@{
+	List<SelectListItem> pickList = new List<SelectListItem>();
+	
+	for (int i = 1; i <= Model.BasesCount; i++)
+	{
+		SelectListItem pickListItem = new SelectListItem()
+		{
+			Value = i.ToString(),
+			Text = i.ToString()
+		};
+
+		pickList.Add(pickListItem);
+	}
+	
+	string memberPickIndex = Model.Id.ToString();
+	
+	//vv this was pretty cool, but I don't think I'll need it. :(
+	string generatedIndex = Html.NameFor(p => p.Id).ToString();
+	generatedIndex = generatedIndex.Replace("[", "").Replace("]", "").Replace(".Id", "");
+}
+
+@*//vv the id including the underscore of the li needs to match exacty the constant _clanWarPickSortedName in ClanWarPicksManager *@
+<li class="ui-state-default" id="clanWarPick_@memberPickIndex">
+	@Html.HiddenFor(p => p.Id)
+	@Html.HiddenFor(p => p.ClanWarId)
+	@Html.HiddenFor(p => p.ClanUserId)
+	@Html.HiddenFor(p => p.ClanMemberWarPosition)
+	@Html.HiddenFor(p => p.AddedOn)
+	@Html.HiddenFor(p => p.UpdatedOn)
+
+	@Html.DisplayFor(p => p.ClanUserName)
+	@Html.DropDownList("pickVS", new SelectList(pickList.Select(p => new { Value = p.Value, Text = p.Text }),
+									"Value",
+									"Text",
+									Model.PickVS))
+	@Html.EditorFor(p => p.Note)
+</li>

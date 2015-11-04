@@ -1,0 +1,86 @@
+﻿@model HouseOfClans.Models.ViewModels.ClanWar.ClanWarViewModel
+
+@{
+    ViewBag.Title = "Clan War Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+	string warType = Model.GetWarType(Model.War.warTypeId); 
+}
+@Html.Partial("ClanLayout")
+
+@using (Html.BeginForm("Details", "ClanWar"))
+{
+	@Html.AntiForgeryToken()
+
+	<div class="panel panel-default panel-main">
+		<div class="panel-heading panel-main-title" style="background-color: black; border-color:black;">
+			<h1 class="tab-title">@ViewBag.Title</h1>
+		</div>
+
+		<hr />
+		<dl class="dl-horizontal">
+			<dt>
+				Clan
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.ClanName)
+			</dd>
+			<dt>
+				War Type
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => warType)
+			</dd>
+			<dt>
+				Opponent Clan
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.clanVS)
+			</dd>
+			<dt>
+				Opponent Clan Tag
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.clanVSTag)
+			</dd>
+			<dt>
+				Note
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.note)
+			</dd>
+			<dt>
+				War Started On
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.warStartedOn)
+			</dd>
+			<dt>
+				War Notes
+			</dt>
+			<dd>
+				@Html.TextArea("warNote", Model.War.warNote, new { id = "warNote", rows = "5", cols = "50" })
+			</dd>
+			<dt>
+				Added On
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.addedOn)
+			</dd>
+			<dt>
+				Updated On
+			</dt>
+			<dd>
+				@Html.DisplayFor(model => model.War.updatedOn)
+			</dd>
+		</dl>
+
+		<div class="form-group">
+			<div class="col-md-10">
+				<input type="submit" value="Save" class="btn btn-default" />
+
+				@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+			</div>
+		</div>
+	</div>
+}

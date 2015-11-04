@@ -1,0 +1,1532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HouseOfClansModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ActionLogs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userClanId" Type="int" Nullable="false" />
+          <Property Name="actionId" Type="smallint" Nullable="false" />
+          <Property Name="objectChanged" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="oldValue" Type="varchar(max)" />
+          <Property Name="newValue" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="propertyChanged" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Actions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClanGroups">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="clanId" Type="int" Nullable="false" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="groupLeaderId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clans">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="shieldLogoLocation" Type="varchar" MaxLength="100" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="description" Type="varchar(max)" />
+          <Property Name="tag" Type="varchar" MaxLength="30" />
+          <Property Name="level" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClanUsers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="userRoleId" Type="smallint" Nullable="false" />
+          <Property Name="clanId" Type="int" />
+          <Property Name="pictureLocation" Type="varchar" MaxLength="100" />
+          <Property Name="villageBasePictureLocation" Type="varchar" MaxLength="100" />
+          <Property Name="warBasePictureLocation" Type="varchar" MaxLength="100" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="aspnetUserId" Type="nvarchar" MaxLength="128" />
+          <Property Name="clanGroupId" Type="int" />
+        </EntityType>
+        <EntityType Name="ClanWarPicks">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanWarId" Type="int" Nullable="false" />
+          <Property Name="pickVS" Type="smallint" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="clanUserId" Type="int" Nullable="false" />
+          <Property Name="clanMemberWarPosition" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClanWars">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="warTypeId" Type="smallint" Nullable="false" />
+          <Property Name="clanId" Type="int" Nullable="false" />
+          <Property Name="clanVS" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="warStartedOn" Type="datetime" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="clanVSTag" Type="varchar" MaxLength="30" />
+          <Property Name="warNote" Type="varchar(max)" />
+          <Property Name="isFinalized" Type="bit" Nullable="false" />
+          <Property Name="xp" Type="smallint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Requests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanId" Type="int" Nullable="false" />
+          <Property Name="aspnetUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="processed" Type="bit" Nullable="false" />
+          <Property Name="accepted" Type="bit" Nullable="false" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Rules">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanId" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserBlackLists">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanUserId" Type="int" Nullable="false" />
+          <Property Name="clanId" Type="int" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserRoles">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WarLogs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanWarId" Type="int" Nullable="false" />
+          <Property Name="clanStars" Type="smallint" Nullable="false" />
+          <Property Name="clanAttacksWon" Type="smallint" Nullable="false" />
+          <Property Name="clanAttacksUsed" Type="smallint" Nullable="false" />
+          <Property Name="clanAverageDestruction" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="clan3Stars" Type="smallint" Nullable="false" />
+          <Property Name="clan2Stars" Type="smallint" Nullable="false" />
+          <Property Name="clan1Stars" Type="smallint" Nullable="false" />
+          <Property Name="clanHeroicDefense" Type="int" Nullable="false" />
+          <Property Name="clanHeroicAttack" Type="int" Nullable="false" />
+          <Property Name="clanVSStars" Type="smallint" Nullable="false" />
+          <Property Name="clanVSAttacksWon" Type="smallint" Nullable="false" />
+          <Property Name="clanVSAttacksUsed" Type="smallint" Nullable="false" />
+          <Property Name="clanVSAverageDestruction" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="clanVS3Stars" Type="smallint" Nullable="false" />
+          <Property Name="clanVS2Stars" Type="smallint" Nullable="false" />
+          <Property Name="clanVS1Stars" Type="smallint" Nullable="false" />
+          <Property Name="clanVSHeroicDefense" Type="varchar" MaxLength="20" />
+          <Property Name="clanVSHeroicAttack" Type="varchar" MaxLength="20" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WarRankings">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="clanUserId" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="clanUserId" Type="int" Nullable="false" />
+          <Property Name="clanWarId" Type="int" Nullable="false" />
+          <Property Name="clanGroupId" Type="int" />
+          <Property Name="heroicDefense" Type="bit" Nullable="false" />
+          <Property Name="heroicAttack" Type="bit" Nullable="false" />
+          <Property Name="attacksDefended" Type="smallint" Nullable="false" />
+          <Property Name="attacksOn" Type="smallint" Nullable="false" />
+          <Property Name="note" Type="varchar(max)" />
+          <Property Name="addedOn" Type="datetime" Nullable="false" />
+          <Property Name="updatedOn" Type="datetime" />
+          <Property Name="optOut" Type="bit" Nullable="false" />
+          <Property Name="stars" Type="smallint" Nullable="false" />
+          <Property Name="xp" Type="smallint" Nullable="false" />
+          <Property Name="attackWin" Type="bit" Nullable="false" />
+          <Property Name="attackOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WarTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="value" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ActionLog_Action">
+          <End Role="Actions" Type="Self.Actions" Multiplicity="1" />
+          <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ActionLogs">
+              <PropertyRef Name="actionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_UserClan">
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="1" />
+          <End Role="ActionLogs" Type="Self.ActionLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ActionLogs">
+              <PropertyRef Name="userClanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanGroup_Clan">
+          <End Role="Clans" Type="Self.Clans" Multiplicity="1" />
+          <End Role="ClanGroups" Type="Self.ClanGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanGroups">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUser_Clan">
+          <End Role="Clans" Type="Self.Clans" Multiplicity="0..1" />
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanUsers">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUser_UserRole">
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="1" />
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanUsers">
+              <PropertyRef Name="userRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUsers_AspNetUserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClanUsers">
+              <PropertyRef Name="aspnetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanWar_Clan">
+          <End Role="Clans" Type="Self.Clans" Multiplicity="1" />
+          <End Role="ClanWars" Type="Self.ClanWars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanWars">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanWar_WarType">
+          <End Role="WarTypes" Type="Self.WarTypes" Multiplicity="1" />
+          <End Role="ClanWars" Type="Self.ClanWars" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanWars">
+              <PropertyRef Name="warTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rules_ToClan">
+          <End Role="Clans" Type="Self.Clans" Multiplicity="1" />
+          <End Role="Rules" Type="Self.Rules" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rules">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBlackList_Clan">
+          <End Role="Clans" Type="Self.Clans" Multiplicity="1" />
+          <End Role="UserBlackLists" Type="Self.UserBlackLists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserBlackLists">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBlackList_ClanUser">
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="1" />
+          <End Role="UserBlackLists" Type="Self.UserBlackLists" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserBlackLists">
+              <PropertyRef Name="clanUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanUser_Attack">
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanHeroicAttack" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanUser_Defense">
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanHeroicDefense" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanWar">
+          <End Role="ClanWars" Type="Self.ClanWars" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanWars">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanWarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarRankings_ClanGroup">
+          <End Role="ClanGroups" Type="Self.ClanGroups" Multiplicity="0..1" />
+          <End Role="WarRankings" Type="Self.WarRankings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanGroups">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRankings">
+              <PropertyRef Name="clanGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarRankings_ClanUser">
+          <End Role="ClanUsers" Type="Self.ClanUsers" Multiplicity="1" />
+          <End Role="WarRankings" Type="Self.WarRankings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRankings">
+              <PropertyRef Name="clanUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarRankings_ClanWar">
+          <End Role="ClanWars" Type="Self.ClanWars" Multiplicity="1" />
+          <End Role="WarRankings" Type="Self.WarRankings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanWars">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRankings">
+              <PropertyRef Name="clanWarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HouseOfClansModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ActionLogs" EntityType="Self.ActionLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Actions" EntityType="Self.Actions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClanGroups" EntityType="Self.ClanGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clans" EntityType="Self.Clans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClanUsers" EntityType="Self.ClanUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClanWarPicks" EntityType="Self.ClanWarPicks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClanWars" EntityType="Self.ClanWars" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rules" EntityType="Self.Rules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserBlackLists" EntityType="Self.UserBlackLists" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WarLogs" EntityType="Self.WarLogs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WarRankings" EntityType="Self.WarRankings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WarTypes" EntityType="Self.WarTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ActionLog_Action" Association="Self.FK_ActionLog_Action">
+            <End Role="Actions" EntitySet="Actions" />
+            <End Role="ActionLogs" EntitySet="ActionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_UserClan" Association="Self.FK_ActionLog_UserClan">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="ActionLogs" EntitySet="ActionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanGroup_Clan" Association="Self.FK_ClanGroup_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanGroups" EntitySet="ClanGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUser_Clan" Association="Self.FK_ClanUser_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUser_UserRole" Association="Self.FK_ClanUser_UserRole">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUsers_AspNetUserId" Association="Self.FK_ClanUsers_AspNetUserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanWar_Clan" Association="Self.FK_ClanWar_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanWars" EntitySet="ClanWars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanWar_WarType" Association="Self.FK_ClanWar_WarType">
+            <End Role="WarTypes" EntitySet="WarTypes" />
+            <End Role="ClanWars" EntitySet="ClanWars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rules_ToClan" Association="Self.FK_Rules_ToClan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="Rules" EntitySet="Rules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBlackList_Clan" Association="Self.FK_UserBlackList_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="UserBlackLists" EntitySet="UserBlackLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBlackList_ClanUser" Association="Self.FK_UserBlackList_ClanUser">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="UserBlackLists" EntitySet="UserBlackLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanUser_Attack" Association="Self.FK_WarLog_ClanUser_Attack">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanUser_Defense" Association="Self.FK_WarLog_ClanUser_Defense">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanWar" Association="Self.FK_WarLog_ClanWar">
+            <End Role="ClanWars" EntitySet="ClanWars" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarRankings_ClanGroup" Association="Self.FK_WarRankings_ClanGroup">
+            <End Role="ClanGroups" EntitySet="ClanGroups" />
+            <End Role="WarRankings" EntitySet="WarRankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarRankings_ClanUser" Association="Self.FK_WarRankings_ClanUser">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="WarRankings" EntitySet="WarRankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarRankings_ClanWar" Association="Self.FK_WarRankings_ClanWar">
+            <End Role="ClanWars" EntitySet="ClanWars" />
+            <End Role="WarRankings" EntitySet="WarRankings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HouseOfClansModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActionLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userClanId" Type="Int32" Nullable="false" />
+          <Property Name="actionId" Type="Int16" Nullable="false" />
+          <Property Name="objectChanged" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="oldValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="newValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Action" Relationship="Self.FK_ActionLog_Action" FromRole="ActionLogs" ToRole="Actions" />
+          <NavigationProperty Name="ClanUser" Relationship="Self.FK_ActionLog_UserClan" FromRole="ActionLogs" ToRole="ClanUsers" />
+          <Property Name="propertyChanged" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Action">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ActionLogs" Relationship="Self.FK_ActionLog_Action" FromRole="Actions" ToRole="ActionLogs" />
+        </EntityType>
+        <EntityType Name="ClanGroup">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clanId" Type="Int32" Nullable="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clan" Relationship="Self.FK_ClanGroup_Clan" FromRole="ClanGroups" ToRole="Clans" />
+          <Property Name="groupLeaderId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WarRankings" Relationship="HouseOfClansModel.FK_WarRankings_ClanGroup" FromRole="ClanGroup" ToRole="WarRanking" />
+        </EntityType>
+        <EntityType Name="Clan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="shieldLogoLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ClanGroups" Relationship="Self.FK_ClanGroup_Clan" FromRole="Clans" ToRole="ClanGroups" />
+          <NavigationProperty Name="ClanUsers" Relationship="Self.FK_ClanUser_Clan" FromRole="Clans" ToRole="ClanUsers" />
+          <NavigationProperty Name="ClanWars" Relationship="Self.FK_ClanWar_Clan" FromRole="Clans" ToRole="ClanWars" />
+          <NavigationProperty Name="UserBlackLists" Relationship="Self.FK_UserBlackList_Clan" FromRole="Clans" ToRole="UserBlackLists" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Rules" Relationship="HouseOfClansModel.FK_Rules_ToClan" FromRole="Clan" ToRole="Rule" />
+          <Property Name="tag" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="level" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClanUser">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="userRoleId" Type="Int16" Nullable="false" />
+          <Property Name="clanId" Type="Int32" />
+          <Property Name="pictureLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="villageBasePictureLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="warBasePictureLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ActionLogs" Relationship="Self.FK_ActionLog_UserClan" FromRole="ClanUsers" ToRole="ActionLogs" />
+          <NavigationProperty Name="Clan" Relationship="Self.FK_ClanUser_Clan" FromRole="ClanUsers" ToRole="Clans" />
+          <NavigationProperty Name="UserRole" Relationship="Self.FK_ClanUser_UserRole" FromRole="ClanUsers" ToRole="UserRoles" />
+          <NavigationProperty Name="UserBlackLists" Relationship="Self.FK_UserBlackList_ClanUser" FromRole="ClanUsers" ToRole="UserBlackLists" />
+          <NavigationProperty Name="WarLogs" Relationship="Self.FK_WarLog_ClanUser_Attack" FromRole="ClanUsers" ToRole="WarLogs" />
+          <Property Name="aspnetUserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="clanGroupId" Type="Int32" />
+          <NavigationProperty Name="AspNetUser" Relationship="HouseOfClansModel.FK_ClanUsers_AspNetUserId" FromRole="ClanUser" ToRole="AspNetUser" />
+          <NavigationProperty Name="WarRankings" Relationship="HouseOfClansModel.FK_WarRankings_ClanUser" FromRole="ClanUser" ToRole="WarRanking" />
+        </EntityType>
+        <EntityType Name="ClanWarPick">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clanWarId" Type="Int32" Nullable="false" />
+          <Property Name="pickVS" Type="Int16" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="clanUserId" Type="Int32" Nullable="false" />
+          <Property Name="clanMemberWarPosition" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClanWar">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="warTypeId" Type="Int16" Nullable="false" />
+          <Property Name="clanId" Type="Int32" Nullable="false" />
+          <Property Name="clanVS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="warStartedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Clan" Relationship="Self.FK_ClanWar_Clan" FromRole="ClanWars" ToRole="Clans" />
+          <NavigationProperty Name="WarType" Relationship="Self.FK_ClanWar_WarType" FromRole="ClanWars" ToRole="WarTypes" />
+          <NavigationProperty Name="WarLogs" Relationship="Self.FK_WarLog_ClanWar" FromRole="ClanWars" ToRole="WarLogs" />
+          <Property Name="clanVSTag" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="warNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WarRankings" Relationship="HouseOfClansModel.FK_WarRankings_ClanWar" FromRole="ClanWar" ToRole="WarRanking" />
+          <Property Name="isFinalized" Type="Boolean" Nullable="false" />
+          <Property Name="xp" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rule">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <Property Name="clanId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clan" Relationship="HouseOfClansModel.FK_Rules_ToClan" FromRole="Rule" ToRole="Clan" />
+        </EntityType>
+        <EntityType Name="UserBlackList">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clanUserId" Type="Int32" Nullable="false" />
+          <Property Name="clanId" Type="Int32" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Clan" Relationship="Self.FK_UserBlackList_Clan" FromRole="UserBlackLists" ToRole="Clans" />
+          <NavigationProperty Name="ClanUser" Relationship="Self.FK_UserBlackList_ClanUser" FromRole="UserBlackLists" ToRole="ClanUsers" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="ClanUsers" Relationship="Self.FK_ClanUser_UserRole" FromRole="UserRoles" ToRole="ClanUsers" />
+        </EntityType>
+        <EntityType Name="WarLog">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clanWarId" Type="Int32" Nullable="false" />
+          <Property Name="clanStars" Type="Int16" Nullable="false" />
+          <Property Name="clanAttacksWon" Type="Int16" Nullable="false" />
+          <Property Name="clanAttacksUsed" Type="Int16" Nullable="false" />
+          <Property Name="clanAverageDestruction" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="clan3Stars" Type="Int16" Nullable="false" />
+          <Property Name="clan2Stars" Type="Int16" Nullable="false" />
+          <Property Name="clan1Stars" Type="Int16" Nullable="false" />
+          <Property Name="clanHeroicDefense" Type="Int32" Nullable="false" />
+          <Property Name="clanHeroicAttack" Type="Int32" Nullable="false" />
+          <Property Name="clanVSStars" Type="Int16" Nullable="false" />
+          <Property Name="clanVSAttacksWon" Type="Int16" Nullable="false" />
+          <Property Name="clanVSAttacksUsed" Type="Int16" Nullable="false" />
+          <Property Name="clanVSAverageDestruction" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="clanVS3Stars" Type="Int16" Nullable="false" />
+          <Property Name="clanVS2Stars" Type="Int16" Nullable="false" />
+          <Property Name="clanVS1Stars" Type="Int16" Nullable="false" />
+          <Property Name="clanVSHeroicDefense" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="clanVSHeroicAttack" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ClanUser" Relationship="Self.FK_WarLog_ClanUser_Attack" FromRole="WarLogs" ToRole="ClanUsers" />
+          <NavigationProperty Name="ClanWar" Relationship="Self.FK_WarLog_ClanWar" FromRole="WarLogs" ToRole="ClanWars" />
+        </EntityType>
+        <EntityType Name="WarType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ClanWars" Relationship="Self.FK_ClanWar_WarType" FromRole="WarTypes" ToRole="ClanWars" />
+        </EntityType>
+        <Association Name="FK_ActionLog_Action">
+          <End Role="Actions" Type="Self.Action" Multiplicity="1" />
+          <End Role="ActionLogs" Type="Self.ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Actions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ActionLogs">
+              <PropertyRef Name="actionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_UserClan">
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="1" />
+          <End Role="ActionLogs" Type="Self.ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ActionLogs">
+              <PropertyRef Name="userClanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanGroup_Clan">
+          <End Role="Clans" Type="Self.Clan" Multiplicity="1" />
+          <End Role="ClanGroups" Type="Self.ClanGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanGroups">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUser_Clan">
+          <End Role="Clans" Type="Self.Clan" Multiplicity="0..1" />
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanUsers">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanWar_Clan">
+          <End Role="Clans" Type="Self.Clan" Multiplicity="1" />
+          <End Role="ClanWars" Type="Self.ClanWar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanWars">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBlackList_Clan">
+          <End Role="Clans" Type="Self.Clan" Multiplicity="1" />
+          <End Role="UserBlackLists" Type="Self.UserBlackList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clans">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserBlackLists">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUser_UserRole">
+          <End Role="UserRoles" Type="Self.UserRole" Multiplicity="1" />
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserRoles">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanUsers">
+              <PropertyRef Name="userRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserBlackList_ClanUser">
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="1" />
+          <End Role="UserBlackLists" Type="Self.UserBlackList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UserBlackLists">
+              <PropertyRef Name="clanUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanUser_Attack">
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanHeroicAttack" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanUser_Defense">
+          <End Role="ClanUsers" Type="Self.ClanUser" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUsers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanHeroicDefense" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanWar_WarType">
+          <End Role="WarTypes" Type="Self.WarType" Multiplicity="1" />
+          <End Role="ClanWars" Type="Self.ClanWar" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ClanWars">
+              <PropertyRef Name="warTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarLog_ClanWar">
+          <End Role="ClanWars" Type="Self.ClanWar" Multiplicity="1" />
+          <End Role="WarLogs" Type="Self.WarLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanWars">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarLogs">
+              <PropertyRef Name="clanWarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HouseOfClansEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActionLogs" EntityType="Self.ActionLog" />
+          <EntitySet Name="Actions" EntityType="Self.Action" />
+          <EntitySet Name="ClanGroups" EntityType="Self.ClanGroup" />
+          <EntitySet Name="Clans" EntityType="Self.Clan" />
+          <EntitySet Name="ClanUsers" EntityType="Self.ClanUser" />
+          <EntitySet Name="ClanWarPicks" EntityType="Self.ClanWarPick" />
+          <EntitySet Name="ClanWars" EntityType="Self.ClanWar" />
+          <EntitySet Name="Rules" EntityType="Self.Rule" />
+          <EntitySet Name="UserBlackLists" EntityType="Self.UserBlackList" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRole" />
+          <EntitySet Name="WarLogs" EntityType="Self.WarLog" />
+          <EntitySet Name="WarTypes" EntityType="Self.WarType" />
+          <AssociationSet Name="FK_ActionLog_Action" Association="Self.FK_ActionLog_Action">
+            <End Role="Actions" EntitySet="Actions" />
+            <End Role="ActionLogs" EntitySet="ActionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_UserClan" Association="Self.FK_ActionLog_UserClan">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="ActionLogs" EntitySet="ActionLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanGroup_Clan" Association="Self.FK_ClanGroup_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanGroups" EntitySet="ClanGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUser_Clan" Association="Self.FK_ClanUser_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanWar_Clan" Association="Self.FK_ClanWar_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="ClanWars" EntitySet="ClanWars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBlackList_Clan" Association="Self.FK_UserBlackList_Clan">
+            <End Role="Clans" EntitySet="Clans" />
+            <End Role="UserBlackLists" EntitySet="UserBlackLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUser_UserRole" Association="Self.FK_ClanUser_UserRole">
+            <End Role="UserRoles" EntitySet="UserRoles" />
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserBlackList_ClanUser" Association="Self.FK_UserBlackList_ClanUser">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="UserBlackLists" EntitySet="UserBlackLists" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanUser_Attack" Association="Self.FK_WarLog_ClanUser_Attack">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanUser_Defense" Association="Self.FK_WarLog_ClanUser_Defense">
+            <End Role="ClanUsers" EntitySet="ClanUsers" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanWar_WarType" Association="Self.FK_ClanWar_WarType">
+            <End Role="WarTypes" EntitySet="WarTypes" />
+            <End Role="ClanWars" EntitySet="ClanWars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarLog_ClanWar" Association="Self.FK_WarLog_ClanWar">
+            <End Role="ClanWars" EntitySet="ClanWars" />
+            <End Role="WarLogs" EntitySet="WarLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rules_ToClan" Association="HouseOfClansModel.FK_Rules_ToClan">
+            <End Role="Clan" EntitySet="Clans" />
+            <End Role="Rule" EntitySet="Rules" />
+          </AssociationSet>
+          <EntitySet Name="C__MigrationHistory1" EntityType="HouseOfClansModel.C__MigrationHistory1" />
+          <EntitySet Name="AspNetRoles" EntityType="HouseOfClansModel.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="HouseOfClansModel.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="HouseOfClansModel.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="HouseOfClansModel.AspNetUser" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="HouseOfClansModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="HouseOfClansModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClanUsers_AspNetUserId" Association="HouseOfClansModel.FK_ClanUsers_AspNetUserId">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="ClanUser" EntitySet="ClanUsers" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="HouseOfClansModel.AspNetUserRoles">
+            <End Role="AspNetRole" EntitySet="AspNetRoles" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="WarRankings" EntityType="HouseOfClansModel.WarRanking" />
+          <AssociationSet Name="FK_WarRankings_ClanGroup" Association="HouseOfClansModel.FK_WarRankings_ClanGroup">
+            <End Role="ClanGroup" EntitySet="ClanGroups" />
+            <End Role="WarRanking" EntitySet="WarRankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarRankings_ClanUser" Association="HouseOfClansModel.FK_WarRankings_ClanUser">
+            <End Role="ClanUser" EntitySet="ClanUsers" />
+            <End Role="WarRanking" EntitySet="WarRankings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarRankings_ClanWar" Association="HouseOfClansModel.FK_WarRankings_ClanWar">
+            <End Role="ClanWar" EntitySet="ClanWars" />
+            <End Role="WarRanking" EntitySet="WarRankings" />
+          </AssociationSet>
+          <EntitySet Name="Requests" EntityType="HouseOfClansModel.Request" />
+        </EntityContainer>
+        <Association Name="FK_Rules_ToClan">
+          <End Type="HouseOfClansModel.Clan" Role="Clan" Multiplicity="1" />
+          <End Type="HouseOfClansModel.Rule" Role="Rule" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clan">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rule">
+              <PropertyRef Name="clanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="C__MigrationHistory1">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUsers" Relationship="HouseOfClansModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="HouseOfClansModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="HouseOfClansModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="HouseOfClansModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="HouseOfClansModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+          <NavigationProperty Name="ClanUsers" Relationship="HouseOfClansModel.FK_ClanUsers_AspNetUserId" FromRole="AspNetUser" ToRole="ClanUser" />
+          <NavigationProperty Name="AspNetRoles" Relationship="HouseOfClansModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Type="HouseOfClansModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="HouseOfClansModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Type="HouseOfClansModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="HouseOfClansModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClanUsers_AspNetUserId">
+          <End Type="HouseOfClansModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="HouseOfClansModel.ClanUser" Role="ClanUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClanUser">
+              <PropertyRef Name="aspnetUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Type="HouseOfClansModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+          <End Type="HouseOfClansModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityType Name="WarRanking">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="clanUserId" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clanUserId" Type="Int32" Nullable="false" />
+          <Property Name="clanWarId" Type="Int32" Nullable="false" />
+          <Property Name="clanGroupId" Type="Int32" />
+          <Property Name="heroicDefense" Type="Boolean" Nullable="false" />
+          <Property Name="heroicAttack" Type="Boolean" Nullable="false" />
+          <Property Name="attacksDefended" Type="Int16" Nullable="false" />
+          <Property Name="attacksOn" Type="Int16" Nullable="false" />
+          <Property Name="note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ClanGroup" Relationship="HouseOfClansModel.FK_WarRankings_ClanGroup" FromRole="WarRanking" ToRole="ClanGroup" />
+          <NavigationProperty Name="ClanUser" Relationship="HouseOfClansModel.FK_WarRankings_ClanUser" FromRole="WarRanking" ToRole="ClanUser" />
+          <NavigationProperty Name="ClanWar" Relationship="HouseOfClansModel.FK_WarRankings_ClanWar" FromRole="WarRanking" ToRole="ClanWar" />
+          <Property Name="optOut" Type="Boolean" Nullable="false" />
+          <Property Name="stars" Type="Int16" Nullable="false" />
+          <Property Name="xp" Type="Int16" Nullable="false" />
+          <Property Name="attackWin" Type="Boolean" Nullable="false" />
+          <Property Name="attackOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_WarRankings_ClanGroup">
+          <End Type="HouseOfClansModel.ClanGroup" Role="ClanGroup" Multiplicity="0..1" />
+          <End Type="HouseOfClansModel.WarRanking" Role="WarRanking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanGroup">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRanking">
+              <PropertyRef Name="clanGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarRankings_ClanUser">
+          <End Type="HouseOfClansModel.ClanUser" Role="ClanUser" Multiplicity="1" />
+          <End Type="HouseOfClansModel.WarRanking" Role="WarRanking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanUser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRanking">
+              <PropertyRef Name="clanUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarRankings_ClanWar">
+          <End Type="HouseOfClansModel.ClanWar" Role="ClanWar" Multiplicity="1" />
+          <End Type="HouseOfClansModel.WarRanking" Role="WarRanking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClanWar">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="WarRanking">
+              <PropertyRef Name="clanWarId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Request">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="clanId" Type="Int32" Nullable="false" />
+          <Property Name="aspnetUserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="processed" Type="Boolean" Nullable="false" />
+          <Property Name="accepted" Type="Boolean" Nullable="false" />
+          <Property Name="addedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="updatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HouseOfClansModelStoreContainer" CdmEntityContainer="HouseOfClansEntities">
+    <EntitySetMapping Name="ActionLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.ActionLog)">
+        <MappingFragment StoreEntitySet="ActionLogs">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userClanId" ColumnName="userClanId" />
+          <ScalarProperty Name="actionId" ColumnName="actionId" />
+          <ScalarProperty Name="objectChanged" ColumnName="objectChanged" />
+          <ScalarProperty Name="oldValue" ColumnName="oldValue" />
+          <ScalarProperty Name="newValue" ColumnName="newValue" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="propertyChanged" ColumnName="propertyChanged" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Actions">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.Action)">
+        <MappingFragment StoreEntitySet="Actions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClanGroups">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.ClanGroup)">
+        <MappingFragment StoreEntitySet="ClanGroups">
+          <ScalarProperty Name="groupLeaderId" ColumnName="groupLeaderId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="clanId" ColumnName="clanId" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clans">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.Clan)">
+        <MappingFragment StoreEntitySet="Clans">
+          <ScalarProperty Name="level" ColumnName="level" />
+                <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="shieldLogoLocation" ColumnName="shieldLogoLocation" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="tag" ColumnName="tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClanUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.ClanUser)">
+        <MappingFragment StoreEntitySet="ClanUsers">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="userRoleId" ColumnName="userRoleId" />
+          <ScalarProperty Name="clanId" ColumnName="clanId" />
+          <ScalarProperty Name="pictureLocation" ColumnName="pictureLocation" />
+          <ScalarProperty Name="villageBasePictureLocation" ColumnName="villageBasePictureLocation" />
+          <ScalarProperty Name="warBasePictureLocation" ColumnName="warBasePictureLocation" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+          <ScalarProperty Name="aspnetUserId" ColumnName="aspnetUserId" />
+          <ScalarProperty Name="clanGroupId" ColumnName="clanGroupId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClanWarPicks">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.ClanWarPick)">
+        <MappingFragment StoreEntitySet="ClanWarPicks">
+          <ScalarProperty Name="clanMemberWarPosition" ColumnName="clanMemberWarPosition" />
+                <ScalarProperty Name="clanUserId" ColumnName="clanUserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="clanWarId" ColumnName="clanWarId" />
+          <ScalarProperty Name="pickVS" ColumnName="pickVS" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClanWars">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.ClanWar)">
+        <MappingFragment StoreEntitySet="ClanWars">
+          <ScalarProperty Name="xp" ColumnName="xp" />
+                <ScalarProperty Name="isFinalized" ColumnName="isFinalized" />
+                <ScalarProperty Name="warNote" ColumnName="warNote" />
+                <ScalarProperty Name="clanVSTag" ColumnName="clanVSTag" />
+                <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="warTypeId" ColumnName="warTypeId" />
+          <ScalarProperty Name="clanId" ColumnName="clanId" />
+          <ScalarProperty Name="clanVS" ColumnName="clanVS" />
+          <ScalarProperty Name="warStartedOn" ColumnName="warStartedOn" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Rules">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.Rule)">
+        <MappingFragment StoreEntitySet="Rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+          <ScalarProperty Name="clanId" ColumnName="clanId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserBlackLists">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.UserBlackList)">
+        <MappingFragment StoreEntitySet="UserBlackLists">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="clanUserId" ColumnName="clanUserId" />
+          <ScalarProperty Name="clanId" ColumnName="clanId" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.UserRole)">
+        <MappingFragment StoreEntitySet="UserRoles">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarLogs">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.WarLog)">
+        <MappingFragment StoreEntitySet="WarLogs">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="clanWarId" ColumnName="clanWarId" />
+          <ScalarProperty Name="clanStars" ColumnName="clanStars" />
+          <ScalarProperty Name="clanAttacksWon" ColumnName="clanAttacksWon" />
+          <ScalarProperty Name="clanAttacksUsed" ColumnName="clanAttacksUsed" />
+          <ScalarProperty Name="clanAverageDestruction" ColumnName="clanAverageDestruction" />
+          <ScalarProperty Name="clan3Stars" ColumnName="clan3Stars" />
+          <ScalarProperty Name="clan2Stars" ColumnName="clan2Stars" />
+          <ScalarProperty Name="clan1Stars" ColumnName="clan1Stars" />
+          <ScalarProperty Name="clanHeroicDefense" ColumnName="clanHeroicDefense" />
+          <ScalarProperty Name="clanHeroicAttack" ColumnName="clanHeroicAttack" />
+          <ScalarProperty Name="clanVSStars" ColumnName="clanVSStars" />
+          <ScalarProperty Name="clanVSAttacksWon" ColumnName="clanVSAttacksWon" />
+          <ScalarProperty Name="clanVSAttacksUsed" ColumnName="clanVSAttacksUsed" />
+          <ScalarProperty Name="clanVSAverageDestruction" ColumnName="clanVSAverageDestruction" />
+          <ScalarProperty Name="clanVS3Stars" ColumnName="clanVS3Stars" />
+          <ScalarProperty Name="clanVS2Stars" ColumnName="clanVS2Stars" />
+          <ScalarProperty Name="clanVS1Stars" ColumnName="clanVS1Stars" />
+          <ScalarProperty Name="clanVSHeroicDefense" ColumnName="clanVSHeroicDefense" />
+          <ScalarProperty Name="clanVSHeroicAttack" ColumnName="clanVSHeroicAttack" />
+          <ScalarProperty Name="note" ColumnName="note" />
+          <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+          <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WarTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(HouseOfClansModel.WarType)">
+        <MappingFragment StoreEntitySet="WarTypes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="value" ColumnName="value" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory1">
+            <EntityTypeMapping TypeName="HouseOfClansModel.C__MigrationHistory1">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="HouseOfClansModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="HouseOfClansModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="HouseOfClansModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="HouseOfClansModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="HouseOfClansModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="WarRankings">
+            <EntityTypeMapping TypeName="HouseOfClansModel.WarRanking">
+              <MappingFragment StoreEntitySet="WarRankings">
+                <ScalarProperty Name="attackOn" ColumnName="attackOn" />
+                <ScalarProperty Name="attackWin" ColumnName="attackWin" />
+                <ScalarProperty Name="xp" ColumnName="xp" />
+                <ScalarProperty Name="stars" ColumnName="stars" />
+                <ScalarProperty Name="optOut" ColumnName="optOut" />
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="attacksOn" ColumnName="attacksOn" />
+                <ScalarProperty Name="attacksDefended" ColumnName="attacksDefended" />
+                <ScalarProperty Name="heroicAttack" ColumnName="heroicAttack" />
+                <ScalarProperty Name="heroicDefense" ColumnName="heroicDefense" />
+                <ScalarProperty Name="clanGroupId" ColumnName="clanGroupId" />
+                <ScalarProperty Name="clanWarId" ColumnName="clanWarId" />
+                <ScalarProperty Name="clanUserId" ColumnName="clanUserId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Requests">
+            <EntityTypeMapping TypeName="HouseOfClansModel.Request">
+              <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="updatedOn" ColumnName="updatedOn" />
+                <ScalarProperty Name="addedOn" ColumnName="addedOn" />
+                <ScalarProperty Name="accepted" ColumnName="accepted" />
+                <ScalarProperty Name="processed" ColumnName="processed" />
+                <ScalarProperty Name="aspnetUserId" ColumnName="aspnetUserId" />
+                <ScalarProperty Name="clanId" ColumnName="clanId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
